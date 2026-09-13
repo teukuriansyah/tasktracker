@@ -1,7 +1,14 @@
 import { ArrowLeft } from "react-feather"
 import { Link } from "react-router-dom"
+import Plugin from "../../taskplugin/src/index.ts"
 
 export default function Input() {
+  const [location,setLocation] = useState("")
+
+  const getLocation = async() => {
+    const location = await Plugin.getLocation()
+    setLocation(location)
+  }
   return(
     <>
       <nav className="bg-gray-950 p-4 text-white flex gap-2 items-center sticky">
@@ -23,7 +30,7 @@ export default function Input() {
           
           <div className="border border-dashed rounded border-blue-300 bg-blue-50 p-5 flex flex-col gap-5">
             <button className="border border-gray-400 bg-gray-200 text-gray-700 rounded w-full">📷 Take photo</button>
-            <button className="border border-gray-400 bg-gray-200 text-gray-700 rounded w-full">📍 Located tag</button>
+            <button className="border border-gray-400 bg-gray-200 text-gray-700 rounded w-full" onClick={() => getLocation()}>📍 Located tag {location}</button>
           </div>
           
           <button type="submit" className="bg-blue-600 font-bold text-white rounded p-3 w-full">Save Task</button>

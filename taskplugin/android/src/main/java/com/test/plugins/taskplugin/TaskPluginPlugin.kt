@@ -6,14 +6,14 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 
-@NativePlugin()
-class EchoPlugin : Plugin() {
-
+@CapacitorPlugin(name = "TaskPlugin")
+class TaskPlugin : Plugin() {
+  
   @PluginMethod
-  fun echo(call: PluginCall) {
+  fun getLocation(call: PluginCall) {
     
-    val ret = JSObject()
-    ret.put("value", "hey antek antek asing")
+    val getLocation = Location()
+    ret.put("location", getLocation.location())
     call.success(ret)
   }
 }

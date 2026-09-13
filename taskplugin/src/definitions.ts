@@ -1,3 +1,3 @@
 export interface TaskPluginPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  getLocation(): Promise<{ location: string | string[] }>;
 }
