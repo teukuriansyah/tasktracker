@@ -5,10 +5,18 @@ import { TaskPlugin } from "../../taskplugin/src/index.ts"
 
 export default function Input() {
   const [location,setLocation] = useState("")
+  const [message, setMessage] = useState()
 
   const getLocation = async() => {
     const location = await TaskPlugin.getLocation()
     setLocation(location)
+  }
+
+  const postData = async(formData) => {
+    const date = formData.get("date")
+    const title = formData.get("title")
+    const nativeMessage = await TaskPlugin.postData(JSON.stringify({title,date}))
+    setMessage(nativeMessage)
   }
   return(
     <>
@@ -17,15 +25,15 @@ export default function Input() {
         <h1 className="font-bold text-lg">Add New Task</h1>
       </nav>
       <div>
-        <form className="p-5 flex flex-col gap-4">
+        <form action={postData} className="p-5 flex flex-col gap-4">
           <div className="flex flex-col gap-3">
             <div className="flex flex-col">
               <label>Title</label>
-              <input className="outline-0 border border-grey-50 rounded px-1"/>
+              <input name="title" className="outline-0 border border-grey-50 rounded px-1"/>
             </div>
             <div className="flex flex-col">
               <label>Date</label>
-              <input type="date" className="outline-0 border rounded w-full border-grey-50 px-1"/>
+              <input name="date" type="date" className="outline-0 border rounded w-full border-grey-50 px-1"/>
             </div>
           </div>
           
