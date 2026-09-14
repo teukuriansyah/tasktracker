@@ -1,5 +1,5 @@
 {
-  "appId": "com.testing.tasktracker",
+  "appId": "com.test.tasktracker",
   "appName": "Task Tracker",
   "webDir": "dist"
 }
