@@ -7,17 +7,18 @@ class Location : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     fun location() {
-      fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        val result = "error"
 
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location ->
-                if (location != null) {
-                    val latitude = location.latitude
-                    val longitude = location.longitude
-                    return arrayOf(latitude,longitude)
-                } else {
-                    return "error"
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        val latitude = location.latitude
+                        val longitude = location.longitude
+                        result = "${latitude} ${longitude}"
+                    } else {
+                        result = "error"
+                    }
                 }
-            }
-    }
+        }
 }

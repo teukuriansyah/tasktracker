@@ -1,12 +1,13 @@
 import { ArrowLeft } from "react-feather"
 import { Link } from "react-router-dom"
-import Plugin from "../../taskplugin/src/index.ts"
+import { useState, useEffect } from "react"
+import { TaskPlugin } from "../../taskplugin/src/index.ts"
 
 export default function Input() {
   const [location,setLocation] = useState("")
 
   const getLocation = async() => {
-    const location = await Plugin.getLocation()
+    const location = await TaskPlugin.getLocation()
     setLocation(location)
   }
   return(
