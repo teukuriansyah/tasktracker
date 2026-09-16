@@ -1,7 +1,30 @@
+import { useState, useEffect } from "react"
+import { App as CapacitorApp } from '@capacitor/app';
 import { Link } from "react-router-dom"
 import { ArrowLeft } from "react-feather"
+import Plugin from "../plugin/Plugin"
 
 export default function Input() {
+  const [datas, setDatas] = useState("")
+
+  const getData = async() => {
+    const data = await Plugin.getData()
+    setDatas((data.data == "No data") ? [] : JSON.parse(data.data))
+  }
+
+  const postData = async(formData) => {
+    const title = formData.get("title")
+    const date = formData.get("date")
+    const sendData = datas
+    sendData.push({title,date})
+    await Plugin.postData({data:JSON.stringify(sendData)})
+  }
+
+  CapacitorApp.addListener('backButton', () => window.history.back());
+
+  useEffect(() => {
+    getData()
+  },[])
   return(
     <>
       <nav className="bg-gray-900 p-4 text-white flex gap-3 items-center">
@@ -9,12 +32,12 @@ export default function Input() {
         <h1 className="font-bold text-lg">Add new task</h1>
       </nav>
       <div className="p-4">
-        <form className="flex flex-col gap-3">
+        <form className="flex flex-col gap-3" action={postData}>
           <div className="flex flex-col gap-1">
             <label className="text-gray-700 font-bold">Title</label>
-            <input className="outline-0 border-2 border-gray-500 rounded"/>
+            <input name="title" className="outline-0 border-2 border-gray-500 rounded"/>
             <label className="text-gray-700 font-bold">Date</label>
-            <input type="date" className="outline-0 border-2 border-gray-500 rounded w-full"/>
+            <input name="date" type="date" className="outline-0 border-2 border-gray-500 rounded w-full"/>
           </div>
           <div className="flex flex-col gap-2 border-2 border-blue-500 border-dashed rounded bg-blue-50 p-3">
             <h1 className="text-blue-800 font-bold">Integrated Native Android</h1>
